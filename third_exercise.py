@@ -1,5 +1,4 @@
 import os
-
 from dotenv import load_dotenv
 import streamlit as st
 from langchain_groq import ChatGroq
@@ -65,10 +64,11 @@ if user_prompt:
         *st.session_state.chat_history
     ]
 
-    if provider == "Groq":
-        response = llm.invoke(ollama_messages)
-    else:
-        response = llm.chat(selected_model, messages=ollama_messages)
+    with st.spinner("Genie is thinking..."):
+        if provider == "Groq":
+            response = llm.invoke(ollama_messages)
+        else:
+            response = llm.chat(selected_model, messages=ollama_messages)
 
     if provider == "Groq":
         assistant_response = response.content
